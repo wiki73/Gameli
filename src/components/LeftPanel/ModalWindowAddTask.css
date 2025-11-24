@@ -1,0 +1,39 @@
+.ModalWindowAddTask{
+    width: 500px;
+    height: 200px;
+    background-color: lightgray;
+    border: 1px solid #000000;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    padding: 0px;
+
+}
+
+.button-clouse {
+    position: absolute;
+    top: 0px;
+    right: 2px;
+    background: transparent;
+    border: none;
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+/* DOM-based overlay (minimal) */
+.modal-overlay{
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999; /* under modal (1000) */
+}
+.ModalWindowAddTask input[type="radio"]:focus {
+    outline: none;
+    
+}
