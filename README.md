@@ -1,70 +1,97 @@
-# Getting Started with Create React App
+# Gamified Life Quest --- README
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Описание проекта
 
-## Available Scripts
+Проект представляет собой веб-платформу для геймификации жизни, где все
+жизненные задачи превращаются в квесты и элементы RPG. Пользователь
+прокачивает персонажа, выполняя задачи, получает опыт, деньги, уровни,
+ранги и открывает визуальные награды.
 
-In the project directory, you can run:
+## Основная концепция
 
-### `npm start`
+-   Жизненные задачи становятся квестами.
+-   Есть 3 уровня структуры задач: большие → средние → маленькие.
+-   У систем прогресса 3 уровня: общий уровень, уровни сфер, уровни
+    подсфер.
+-   За выполнение задач начисляется XP и внутренняя валюта.
+-   Персонаж кастомизируется через покупки.
+-   Есть ранги, достижения и «послужной список».
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Структура задач
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Большие задачи
 
-### `npm test`
+-   Главная цель.
+-   Содержит 3 средние задачи.
+-   Выполняется автоматически после выполнения всех средних.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Средние задачи
 
-### `npm run build`
+-   Содержат 3 маленькие задачи.
+-   Выполняются автоматически после выполнения всех маленьких.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Маленькие задачи
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+-   Базовые действия.
+-   XP и деньги начисляются напрямую за выполнение.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Сферы и подсферы
 
-### `npm run eject`
+-   Сферы --- общие направления (Программирование, Спорт, Учёба).
+-   Подсферы --- конкретные направления (Python, JS, Бокс, Зарядка).
+-   XP начисляется одновременно подсфере, сфере и общему уровню.
+-   Сферы и подсферы имеют коэффициенты XP.
+-   Пользователь может вручную менять коэффициент.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Расчёт опыта
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Формула:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+    XP = base_xp * K(сферы/подсферы) * time_coef
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Есть флаг «низкая задача» --- XP сильно занижается.
 
-## Learn More
+## Внутренняя валюта
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+-   Выдаётся пропорционально XP.
+-   Используется для покупки персонажей, одежды, аксессуаров, скинов.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Уровни и ранги
 
-### Code Splitting
+3 типа уровней: - общий уровень персонажа, - уровни сфер, - уровни
+подсфер.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+3 типа рангов: - общий ранг, - ранг в сфере, - ранг в подсфере.
 
-### Analyzing the Bundle Size
+Ранги дают визуальные награды, титулы, рамки, эмблемы.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Интерфейс приложения
 
-### Making a Progressive Web App
+### Левая панель
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+-   Большой прямоугольник, разделённый на 3 колонки:
+    -   маленькие задачи,
+    -   средние задачи,
+    -   большие задачи.
+-   Задачи связаны цветами и иконками (теги).
+-   Используются выпадающие списки для маленьких задач, чтобы избежать
+    перегрузки.
+-   От больших задач идут связанные средние, от средних --- маленькие.
 
-### Advanced Configuration
+### Центральная панель
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+-   Персонаж.
+-   Общий уровень.
+-   Текущее количество XP.
+-   Внутренние деньги.
 
-### Deployment
+### Правая панель
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+-   Иконки подсфер (круги).
+-   Под каждой иконкой --- уровень подсферы (1--25).
+-   Список иконок в 2 столбца.
 
-### `npm run build` fails to minify
+## Послужной список
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Отдельная вкладка со списком выполненных задач, достижений и прогресса
+по сферам.
