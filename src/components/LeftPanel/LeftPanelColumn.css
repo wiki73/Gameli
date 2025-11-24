@@ -3,13 +3,12 @@
 }
 
 
-
-
-
-
-
-
 .LeftPanelItem {
     margin: 2px;
     border: 1px solid #000000;
+}
+
+
+.LeftPanelColumn h2 {
+    color: red;
 }
