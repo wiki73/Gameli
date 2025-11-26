@@ -1,5 +1,5 @@
 .LeftPanel {
-    border: 2px solid #000000;
+    border: 5px solid #672f2f;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 95% 5%;
