@@ -1,10 +1,21 @@
-import React, { use, useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import './CenterPanel.css';
 import levi from './levi.png';
+import { ConfigContext } from "../../ConfigContext";
 
 function CenterPanel() {
-    const [xp, setXp] = useState(1234);
-    const [money, setMoney] = useState(2412);
+    const config = useContext(ConfigContext);
+    const [xp, setXp] = useState(0);
+    const [money, setMoney] = useState(0);
+
+    // Обновляем состояние когда config загружается
+    useEffect(() => {
+        if (config && config.credit) {
+            setXp(config.credit.xp);
+            setMoney(config.credit.money);
+        }
+    }, [config]);
+
     return (
         <div className="CenterPanel">
             <h2>Center Panel</h2>

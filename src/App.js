@@ -1,8 +1,12 @@
 import './App.css';
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import LeftPanel from './components/LeftPanel/LeftPanel';
 import CenterPanel from './components/CenterPanel/CenterPanel';
 import RightPanel from './components/RightPanel/RightPanel';
+
+import { ConfigContext } from "./ConfigContext";
+import configJson from "./config.json";
+
 
 function App() {
   const [littleTasks, setLittleTasks] = useState([
@@ -23,33 +27,91 @@ function App() {
     { id: 3, description: 'Большая задача 3' },
   ]);
 
-  function addTask(description, sizeTask) {
-    {console.log(sizeTask);}
+  const addTask = useCallback((description, sizeTask) => {
     const newTask = { id: Date.now(), description };
-    if (sizeTask === 'little') {
-    setLittleTasks((prev) => [...prev, newTask]);
-    }
-    if (sizeTask === 'medium') {
-      setMediumTasks((prev) => [...prev, newTask]);
-    }
-    if (sizeTask === 'large') {
-      setLargeTasks((prev) => [...prev, newTask]);
-    }
     
+    switch (sizeTask) {
+      case 'little':
+        setLittleTasks((prev) => [...prev, newTask]);
+        break;
+      case 'medium':
+        setMediumTasks((prev) => [...prev, newTask]);
+        break;
+      case 'large':
+        setLargeTasks((prev) => [...prev, newTask]);
+        break;
+      default:
+        console.warn(`Unknown task size: ${sizeTask}`);
+    }
+  }, []);
+
+
+  const [config, setConfig] = useState(null);
+  const [configLoading, setConfigLoading] = useState(true);
+  const [configError, setConfigError] = useState(null);
+
+  useEffect(() => {
+    const fetchConfig = async () => {
+      try {
+        setConfigLoading(true);
+        setConfigError(null);
+        const response = await fetch("./config.json");
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const configData = await response.json();
+        console.log('Конфиг загружен:', configData.credit);
+        setConfig(configData);
+      } catch (error) {
+        console.error('Ошибка загрузки конфига:', error);
+        setConfigError(error.message);
+      } finally {
+        setTimeout(() => {setConfigLoading(false);}, 1000); // Искусственная задержка
+        
+      }
+    };
+
+    fetchConfig();
+  }, []);
+
+
+  if (configLoading) {
+    return (
+      <div style={{position: "absolute", top: 0, left: 0, bottom: 0, right: 0,}}>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+          <p style={{fontSize: "2.5em"}}>Загрузка конфигурации...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (configError) {
+    return (
+      <div className="App">
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+          <p>Ошибка загрузки конфигурации: {configError}</p>
+        </div>
+      </div>
+    );
   }
 
   return (
+    <ConfigContext.Provider value={config}>
     <div className="App">
       <LeftPanel
         className="left-panel"
-        litteTasks={littleTasks}
+        littleTasks={littleTasks}
         mediumTasks={mediumTasks}
         largeTasks={largeTasks}
         addTask={addTask}
+        // useContext
       />
-      <CenterPanel className="center-panel"/>
+      <CenterPanel className="center-panel" />
       <RightPanel />
     </div>
+    </ConfigContext.Provider>
   );
 }
 

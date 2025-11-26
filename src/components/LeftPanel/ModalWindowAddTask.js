@@ -1,7 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import './ModalWindowAddTask.css';
+import { ConfigContext } from "../../ConfigContext";
 
 function ModalWindowAddTask({ addTask }) {
+    const config = useContext(ConfigContext);
     const [open, setOpen] = useState(false);
     const inputRef = useRef(null);
     const isFocusedRef = useRef(false);
@@ -56,11 +58,10 @@ function ModalWindowAddTask({ addTask }) {
         return () => clearTimeout(id);
     }, [open]);
 
-    function handleSubmit(e) {
+    const handleSubmit = (e) => {
         e.preventDefault();
         const description = e.target.description.value.trim();
         const sizeTask = e.target.taskSize.value;
-        {console.log(sizeTask);}
         if (!description) return;
         if (typeof addTask === 'function') addTask(description, sizeTask);
         setOpen(false);
@@ -68,14 +69,14 @@ function ModalWindowAddTask({ addTask }) {
     }
      
     return (
-        <div>
+        <>
             <button onClick={() => setOpen(true)}>Добавить задачу</button>
 
             {open && (
                 <div className="modal-overlay"  onClick={() => setOpen(false)}>
                     <form className="ModalWindowAddTask" onSubmit={handleSubmit} onClick={(e) => e.stopPropagation()} >
-                        <input ref={inputRef} type="text" name="description" onFocus={() => isFocusedRef.current = true} onBlur={() => isFocusedRef.current =false}/>
-                        <input
+                        <input tabIndex={1} ref={inputRef} type="text" name="description" onFocus={() => isFocusedRef.current = true} onBlur={() => isFocusedRef.current =false}/>
+                        <input 
                          type="radio"
                           name="taskSize"
                            value="little"
@@ -93,13 +94,13 @@ function ModalWindowAddTask({ addTask }) {
                            value="large"
                            checked={selectedSize === 'large'}
                             onChange={(e) => setSelectedSize(e.target.value)} /> Большая
-                        <button type="submit">Отправить</button>
-                        <button className="button-clouse" onClick={() => setOpen(false)}>x</button>
+                        <button tabIndex={2} type="submit">Отправить</button>
+                        <button className="button-close" onClick={() => setOpen(false)}>x</button>
                     </form>
                 </div>
             )}
 
-        </div>
+        </>
     );
 }
 

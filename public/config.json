@@ -1,0 +1,33 @@
+{
+  
+  "credit": {
+    "xp": 5,
+    "money": 2
+  }
+  ,
+  "base_xp": {
+    "small_task": 10,
+    "medium_task": 30,
+    "large_task": 100
+  },
+
+  "low_task_multiplier": 0.2,
+
+  "time_coefficients": {
+    "short": 1.0,
+    "medium": 1.3,
+    "long": 1.8
+  },
+
+  "sphere_coefficients": {
+    "programming": 1.2,
+    "reading": 1.0
+  },
+
+  "currency_rate": 1.0,
+
+  "level_curve": {
+    "base_requirement": 100,
+    "growth_factor": 1.35
+  }
+}
