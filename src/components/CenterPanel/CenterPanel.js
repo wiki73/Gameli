@@ -1,17 +1,17 @@
-import React, { use, useState } from "react";
+import React, { useContext, useState } from "react";
+import { GameContext } from "../../config/GameContext";
 import './CenterPanel.css';
 import levi from './levi.png';
 
 function CenterPanel() {
-    const [xp, setXp] = useState(1234);
-    const [money, setMoney] = useState(2412);
+    const { state } = useContext(GameContext);
     return (
         <div className="CenterPanel">
             <h2>Center Panel</h2>
             <img className="img-ang" src={levi} alt="King" />
             <div className="div-xp-and-money">
-                <p>{xp} Опыт</p>
-                <p>{money} Денег</p>
+                <p>{state.exp} Опыт</p>
+                <p>{state.gold} Денег</p>
             </div>
             <div className="div-inventory-shop-records">
                 <div>Инвентарь</div>

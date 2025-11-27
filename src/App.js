@@ -4,6 +4,8 @@ import LeftPanel from './components/LeftPanel/LeftPanel';
 import CenterPanel from './components/CenterPanel/CenterPanel';
 import RightPanel from './components/RightPanel/RightPanel';
 
+import { GameProvider } from "./config/GameProvider";
+
 function App() {
   const [littleTasks, setLittleTasks] = useState([
     { id: 1, description: 'Мелкая задача 1' },
@@ -39,6 +41,7 @@ function App() {
   }
 
   return (
+    <GameProvider>
     <div className="App">
       <LeftPanel
         className="left-panel"
@@ -50,6 +53,7 @@ function App() {
       <CenterPanel className="center-panel"/>
       <RightPanel />
     </div>
+    </GameProvider>
   );
 }
 
