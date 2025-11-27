@@ -4,9 +4,7 @@ import LeftPanel from './components/LeftPanel/LeftPanel';
 import CenterPanel from './components/CenterPanel/CenterPanel';
 import RightPanel from './components/RightPanel/RightPanel';
 
-import { ConfigContext } from "./ConfigContext";
-import configJson from "./config.json";
-
+import { GameProvider } from "./config/GameProvider";
 
 function App() {
   const [littleTasks, setLittleTasks] = useState([
@@ -98,7 +96,7 @@ function App() {
   }
 
   return (
-    <ConfigContext.Provider value={config}>
+    <GameProvider>
     <div className="App">
       <LeftPanel
         className="left-panel"
@@ -111,7 +109,7 @@ function App() {
       <CenterPanel className="center-panel" />
       <RightPanel />
     </div>
-    </ConfigContext.Provider>
+    </GameProvider>
   );
 }
 
